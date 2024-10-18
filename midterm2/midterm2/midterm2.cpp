@@ -44,6 +44,11 @@ void loadNames(vector<string>& names) {
     }
 
     inFile.close(); // Close the file after reading
+
+    // Check if the names vector is empty
+    if (names.empty()) {
+        cout << "names.txt is empty." << endl;
+    }
 }
 
 void simulateCoffeeShop() {
@@ -51,6 +56,11 @@ void simulateCoffeeShop() {
     vector<string> names; 
     loadNames(names); 
 
+    // Check is there are names loaded before starting simulation
+    if (names.empty()) {
+        cout << "No customer names found. Simulation cannot proceed." << endl;
+        return; // Exit the simulation if there are no names loaded
+    }
 
     cout << "Store opens:" << endl;
 
