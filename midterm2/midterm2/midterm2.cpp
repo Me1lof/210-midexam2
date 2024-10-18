@@ -44,3 +44,39 @@ void simulateCoffeeShop() {
     loadNames(names); 
 
     cout << "Store opens:" << endl;
+
+    // Initial customers joining the line
+    for (int i = 0; i < 5; i++) {
+        int randomIndex = rand() % names.size(); // Pick a random name
+        string customerName = names[randomIndex];
+        line.push_back(customerName); // Add customer to the line
+        cout << "    " << customerName << " joined the line" << endl;
+    }
+
+    line.print();
+
+
+    for (int timeStep = 1; timeStep <= 20; timeStep++) {
+        cout << "Time step #" << timeStep << ":" << endl;
+        // Check if a customer can be served
+        if (rand() % 100 < PROB_SERVE && line.getHead() != nullptr) {
+            string servedCustomer = line.getHead()->data; // Get the customer at the front
+            cout << "    " << servedCustomer << " is served" << endl;
+            line.pop_front();
+        }
+
+
+        // Check for a new customer joining the line
+        if (rand() % 100 < PROB_NEW_CUSTOMER) {
+            int randomIndex = rand() % names.size();
+            string newCustomer = names[randomIndex];
+            line.push_back(newCustomer);
+            cout << "    " << newCustomer << " joined the line" << endl;
+        }
+
+        // Check if the last customer leaves
+        if (rand() % 100 < PROB_LEAVE_END && line.getTail() != nullptr) {
+            string leavingCustomer = line.getTail()->data;
+            cout << "    " << leavingCustomer << " (at the rear) left the line" << endl;
+            line.pop_back(); // Remove the last customer
+        }
