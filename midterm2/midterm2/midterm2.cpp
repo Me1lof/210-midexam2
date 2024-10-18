@@ -31,7 +31,14 @@ int main() {
 void loadNames(vector<string>& names) {
     ifstream inFile("names.txt");
     string name;
+
+
+    if (!inFile) { // Check if the file opened successfully
+        cout << "Error opening names.txt" << endl;
+        return; 
+    }
    
+
     while (getline(inFile, name)) {
         names.push_back(name); 
     }
@@ -43,6 +50,7 @@ void simulateCoffeeShop() {
     DoublyLinkedList line; // Create a new doubly linked list to represent the line
     vector<string> names; 
     loadNames(names); 
+
 
     cout << "Store opens:" << endl;
 
@@ -89,3 +97,16 @@ void simulateCoffeeShop() {
             int randomIndex = rand() % line.size(); 
             line.delete_pos(randomIndex); 
         }
+
+        // Check if a VIP joins the front
+        if (rand() % 100 < PROB_VIP) {
+            int randomIndex = rand() % names.size();
+            string vipCustomer = names[randomIndex];
+            cout << "    " << vipCustomer << " (VIP) joins the front of the line" << endl;
+            line.push_front(vipCustomer); // Add VIP customer to the front
+        }
+
+        
+        line.print();
+    }
+}
