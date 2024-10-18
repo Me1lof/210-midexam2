@@ -17,6 +17,7 @@ const int PROB_SERVE = 40;
 const int PROB_NEW_CUSTOMER = 60; 
 const int PROB_LEAVE_END = 20; 
 const int PROB_LEAVE_RANDOM = 10; 
+const int PROB_VIP = 10;
 
 void loadNames(vector<string>& names);
 void simulateCoffeeShop();
@@ -74,9 +75,17 @@ void simulateCoffeeShop() {
             cout << "    " << newCustomer << " joined the line" << endl;
         }
 
+
         // Check if the last customer leaves
         if (rand() % 100 < PROB_LEAVE_END && line.getTail() != nullptr) {
             string leavingCustomer = line.getTail()->data;
             cout << "    " << leavingCustomer << " (at the rear) left the line" << endl;
-            line.pop_back(); // Remove the last customer
+            line.pop_back(); 
+        }
+
+
+        // Check if any random customer leaves
+        if (rand() % 100 < PROB_LEAVE_RANDOM && line.getHead() != nullptr) {
+            int randomIndex = rand() % line.size(); 
+            line.delete_pos(randomIndex); 
         }
