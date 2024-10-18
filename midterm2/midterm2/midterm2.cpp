@@ -7,6 +7,7 @@
 #include <ctime>    
 #include <fstream>  
 #include <vector>   
+#include "DoublyLinkedList.h"
 
 
 using namespace std;
@@ -26,3 +27,20 @@ int main() {
     return 0;
 }
 
+void loadNames(vector<string>& names) {
+    ifstream inFile("names.txt");
+    string name;
+   
+    while (getline(inFile, name)) {
+        names.push_back(name); 
+    }
+
+    inFile.close(); // Close the file after reading
+}
+
+void simulateCoffeeShop() {
+    DoublyLinkedList line; // Create a new doubly linked list to represent the line
+    vector<string> names; 
+    loadNames(names); 
+
+    cout << "Store opens:" << endl;
